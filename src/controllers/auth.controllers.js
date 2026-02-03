@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt"
-import { User } from "../../models/user.js";
+import { User } from "../models/user.js";
 
 export const registerUser  = async (req, res) => {    
     try {
@@ -47,20 +47,6 @@ export const login = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             error: "Login failed"
-        })
-    }
-}
-
-export const getAllStaffMembers = async (req, res) => {
-    try {
-        const staffMembers = await User.find({role: 'staff'})
-
-        res.status(201).json({
-            staffMembers
-        })
-    } catch (error) {
-        res.status(501).json({
-            error: "Failed to fetch all staff members"
         })
     }
 }
