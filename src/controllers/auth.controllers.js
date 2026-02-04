@@ -13,7 +13,7 @@ export const registerUser  = async (req, res) => {
         }
         await User.insertOne(user);
         res.status(201).json({
-            message: "user registration successful"
+            message: "User registration successful"
         })
     } catch (error) {
         res.status(500).json({
@@ -28,7 +28,7 @@ export const login = async (req, res) => {
         const user = await User.findOne({ email: email });
 
         if(!user) {
-        return res.status(401).json({ message: "Invalid credentials" });
+            return res.status(401).json({ message: "Invalid credentials" });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
@@ -37,16 +37,23 @@ export const login = async (req, res) => {
             return res.status(401).json({ message: "Invalid credentials" });
         }
 
-        const responseData = await User.findOne({email: email}, {name: 1, email: 1, role: 1})
+        // Return user data without password
+        const responseData = {
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            role: user.role
+        };
 
-        res.json({
+        res.status(200).json({
             message: "Login Successful",
-            responseData
-        })
+            data: responseData
+        });
 
     } catch (error) {
+        console.error("Login error:", error); // Log privately
         res.status(500).json({
-            error: "Login failed"
-        })
+            message: "Login failed"
+        });
     }
 }

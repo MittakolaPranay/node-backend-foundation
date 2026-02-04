@@ -26,11 +26,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ['manager', 'staff'],
         default: 'staff'
-    }
+    },
+    
+},{
+    timestamps: true
 })
 
-const User = new mongoose.model("user", userSchema);
-
-export {
-    User
-}
+export const User = new mongoose.model("user", userSchema);

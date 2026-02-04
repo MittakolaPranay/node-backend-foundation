@@ -9,4 +9,4 @@ const connectToDB = async () => {
     }
 }
 
-export default connectToDB
+export default connectToDB;
